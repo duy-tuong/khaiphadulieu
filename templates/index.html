@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dự đoán tuổi bào ngư</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>🐚 DỰ ĐOÁN TUỔI BÀO NGƯ (ABALONE)</h1>
+      <p class="subtitle">
+        Ứng dụng mô hình học máy hồi quy để ước lượng tuổi bào ngư
+      </p>
+
+      <div class="note">
+        💡 <strong>Hướng dẫn:</strong> Vui lòng nhập các thông số vật lý trong
+        khoảng gợi ý. Có thể bấm <em>“Nhập dữ liệu mẫu”</em> để thử nhanh.
+      </div>
+
+      <form method="post" class="form-box">
+        <h3>🔹 Thông tin chung</h3>
+
+        <div class="form-group">
+          <label>Giới tính</label>
+          <select name="Sex" required>
+            <option value="M">Đực (Male)</option>
+            <option value="F">Cái (Female)</option>
+            <option value="I">Non (Infant)</option>
+          </select>
+        </div>
+
+        <h3>🔹 Kích thước (cm)</h3>
+
+        <div class="form-group">
+          <label>Chiều dài (Length)</label>
+          <input
+            type="number"
+            step="0.01"
+            name="Length"
+            min="0.2"
+            max="0.8"
+            placeholder="0.2 – 0.8"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Đường kính (Diameter)</label>
+          <input
+            type="number"
+            step="0.01"
+            name="Diameter"
+            min="0.15"
+            max="0.65"
+            placeholder="0.15 – 0.65"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Chiều cao (Height)</label>
+          <input
+            type="number"
+            step="0.01"
+            name="Height"
+            min="0.05"
+            max="0.25"
+            placeholder="0.05 – 0.25"
+            required
+          />
+        </div>
+
+        <h3>🔹 Trọng lượng (kg)</h3>
+
+        <div class="form-group">
+          <label>Trọng lượng toàn bộ</label>
+          <input
+            type="number"
+            step="0.01"
+            name="Whole_weight"
+            min="0.1"
+            max="2.5"
+            placeholder="0.1 – 2.5"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Trọng lượng thịt</label>
+          <input
+            type="number"
+            step="0.01"
+            name="Shucked_weight"
+            min="0.05"
+            max="1.5"
+            placeholder="0.05 – 1.5"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Trọng lượng nội tạng</label>
+          <input
+            type="number"
+            step="0.01"
+            name="Viscera_weight"
+            min="0.02"
+            max="0.8"
+            placeholder="0.02 – 0.8"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Trọng lượng vỏ</label>
+          <input
+            type="number"
+            step="0.01"
+            name="Shell_weight"
+            min="0.03"
+            max="1.0"
+            placeholder="0.03 – 1.0"
+            required
+          />
+        </div>
+
+        <div class="button-group">
+          <button type="submit">🔍 Dự đoán</button>
+          <button type="button" onclick="fillSample()">
+            📋 Nhập dữ liệu mẫu
+          </button>
+        </div>
+      </form>
+
+      {% if rings is not none %}
+      <div class="result-box">
+        <h2>📊 KẾT QUẢ DỰ ĐOÁN</h2>
+        <p><strong>Số vòng (Rings):</strong> {{ rings | round(2) }}</p>
+        <p><strong>Tuổi bào ngư:</strong> {{ age | round(2) }} năm</p>
+      </div>
+      {% endif %}
+
+      <footer>
+        <p>Đồ án môn Khai phá dữ liệu – Hồi quy Abalone</p>
+      </footer>
+    </div>
+
+    <script>
+      function fillSample() {
+        document.querySelector('select[name="Sex"]').value = "M";
+        document.querySelector('input[name="Length"]').value = 0.55;
+        document.querySelector('input[name="Diameter"]').value = 0.45;
+        document.querySelector('input[name="Height"]').value = 0.15;
+        document.querySelector('input[name="Whole_weight"]').value = 1.2;
+        document.querySelector('input[name="Shucked_weight"]').value = 0.52;
+        document.querySelector('input[name="Viscera_weight"]').value = 0.25;
+        document.querySelector('input[name="Shell_weight"]').value = 0.35;
+      }
+    </script>
+  </body>
+</html>
