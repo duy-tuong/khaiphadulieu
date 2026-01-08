@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request
 import joblib
 import pandas as pd
+import os
 
+# Khởi tạo Flask app
 app = Flask(__name__)
+
+# Load model đã train sẵn
 model = joblib.load("best_regression_model.pkl")
 
 @app.route("/", methods=["GET", "POST"])
@@ -32,7 +36,7 @@ def index():
         age=age
     )
 
+# Khi chạy trực tiếp bằng python app.py (local)
 if __name__ == "__main__":
-    import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
